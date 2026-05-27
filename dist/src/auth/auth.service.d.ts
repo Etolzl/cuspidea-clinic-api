@@ -19,10 +19,10 @@ export declare class AuthService {
             id: string;
             email: string | undefined;
             perfil: {
-                id: string;
-                fecha_creacion: Date | null;
                 nombre_completo: string;
                 telefono: string | null;
+                id: string;
+                fecha_creacion: Date | null;
                 rol: import("../../generated/prisma/enums").user_role;
             } | null;
         };
@@ -32,10 +32,10 @@ export declare class AuthService {
             id: string;
             email: string | undefined;
             perfil: {
-                id: string;
-                fecha_creacion: Date | null;
                 nombre_completo: string;
                 telefono: string | null;
+                id: string;
+                fecha_creacion: Date | null;
                 rol: import("../../generated/prisma/enums").user_role;
             };
         };

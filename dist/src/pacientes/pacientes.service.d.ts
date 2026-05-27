@@ -6,25 +6,25 @@ export declare class PacientesService {
     private readonly prisma;
     constructor(prisma: PrismaService);
     create(dto: CreatePacienteDto): Promise<{
-        id: number;
-        perfil_id: string | null;
         nombre_completo: string;
         telefono: string;
         correo: string | null;
         fecha_nacimiento: Date | null;
         antecedentes_medicos: string | null;
+        perfil_id: string | null;
         fecha_registro: Date | null;
+        id: number;
     }>;
     findAll(search?: string, pagination?: PaginationDto): Promise<{
         data: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
+            id: number;
         }[];
         meta: {
             total: number;
@@ -36,9 +36,9 @@ export declare class PacientesService {
     findOne(id: number): Promise<{
         citas: {
             id: number;
+            fecha_hora_inicio: Date;
             paciente_id: number;
             dentista_id: string;
-            fecha_hora_inicio: Date;
             fecha_hora_fin: Date;
             estado: import("../../generated/prisma/enums").estado_cita;
             motivo_consulta: string | null;
@@ -46,24 +46,25 @@ export declare class PacientesService {
         }[];
         cobros: {
             id: number;
+            fecha_emision: Date | null;
             paciente_id: number;
             cita_id: number | null;
             monto_total: import("@prisma/client/runtime/index-browser").Decimal;
             monto_pagado: import("@prisma/client/runtime/index-browser").Decimal;
             saldo_pendiente: import("@prisma/client/runtime/index-browser").Decimal | null;
-            fecha_emision: Date | null;
         }[];
         documentos_clinicos: {
             id: number;
+            fecha_subida: Date | null;
             paciente_id: number;
             subido_por: string | null;
             nombre_archivo: string;
             tipo_documento: string | null;
             archivo_url: string;
-            fecha_subida: Date | null;
         }[];
         notas_clinicas: {
             id: number;
+            fecha_consulta: Date | null;
             paciente_id: number;
             dentista_id: string;
             cita_id: number | null;
@@ -71,36 +72,35 @@ export declare class PacientesService {
             tratamiento_realizado: string | null;
             notas_evolucion: string | null;
             odontograma_estado: import("@prisma/client/runtime/client").JsonValue | null;
-            fecha_consulta: Date | null;
         }[];
     } & {
-        id: number;
-        perfil_id: string | null;
         nombre_completo: string;
         telefono: string;
         correo: string | null;
         fecha_nacimiento: Date | null;
         antecedentes_medicos: string | null;
+        perfil_id: string | null;
         fecha_registro: Date | null;
+        id: number;
     }>;
     update(id: number, dto: UpdatePacienteDto): Promise<{
-        id: number;
-        perfil_id: string | null;
         nombre_completo: string;
         telefono: string;
         correo: string | null;
         fecha_nacimiento: Date | null;
         antecedentes_medicos: string | null;
+        perfil_id: string | null;
         fecha_registro: Date | null;
+        id: number;
     }>;
     remove(id: number): Promise<{
-        id: number;
-        perfil_id: string | null;
         nombre_completo: string;
         telefono: string;
         correo: string | null;
         fecha_nacimiento: Date | null;
         antecedentes_medicos: string | null;
+        perfil_id: string | null;
         fecha_registro: Date | null;
+        id: number;
     }>;
 }

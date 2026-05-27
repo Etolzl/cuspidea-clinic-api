@@ -89,8 +89,10 @@ export class AuthService {
   }
 
   async forgotPassword(dto: ForgotPasswordDto) {
+    const redirectTo = `${process.env.FRONTEND_URL || 'http://localhost:3001'}/reset-password`;
+
     const { error } = await this.supabase.client.auth.resetPasswordForEmail(dto.email, {
-      redirectTo: `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password`,
+      redirectTo,
     });
 
     if (error) {

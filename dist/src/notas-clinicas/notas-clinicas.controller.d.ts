@@ -7,33 +7,34 @@ export declare class NotasClinicasController {
     create(dto: CreateNotaClinicaDto): Promise<{
         citas: {
             id: number;
+            fecha_hora_inicio: Date;
             paciente_id: number;
             dentista_id: string;
-            fecha_hora_inicio: Date;
             fecha_hora_fin: Date;
             estado: import("../../generated/prisma/enums").estado_cita;
             motivo_consulta: string | null;
             fecha_creacion: Date | null;
         } | null;
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_consulta: Date | null;
         paciente_id: number;
         dentista_id: string;
         cita_id: number | null;
@@ -41,28 +42,28 @@ export declare class NotasClinicasController {
         tratamiento_realizado: string | null;
         notas_evolucion: string | null;
         odontograma_estado: import("@prisma/client/runtime/client").JsonValue | null;
-        fecha_consulta: Date | null;
     }>;
     findAll(paciente_id?: string, dentista_id?: string): Promise<({
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_consulta: Date | null;
         paciente_id: number;
         dentista_id: string;
         cita_id: number | null;
@@ -70,38 +71,38 @@ export declare class NotasClinicasController {
         tratamiento_realizado: string | null;
         notas_evolucion: string | null;
         odontograma_estado: import("@prisma/client/runtime/client").JsonValue | null;
-        fecha_consulta: Date | null;
     })[]>;
     findOne(id: number): Promise<{
         citas: {
             id: number;
+            fecha_hora_inicio: Date;
             paciente_id: number;
             dentista_id: string;
-            fecha_hora_inicio: Date;
             fecha_hora_fin: Date;
             estado: import("../../generated/prisma/enums").estado_cita;
             motivo_consulta: string | null;
             fecha_creacion: Date | null;
         } | null;
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_consulta: Date | null;
         paciente_id: number;
         dentista_id: string;
         cita_id: number | null;
@@ -109,38 +110,38 @@ export declare class NotasClinicasController {
         tratamiento_realizado: string | null;
         notas_evolucion: string | null;
         odontograma_estado: import("@prisma/client/runtime/client").JsonValue | null;
-        fecha_consulta: Date | null;
     }>;
     update(id: number, dto: UpdateNotaClinicaDto): Promise<{
         citas: {
             id: number;
+            fecha_hora_inicio: Date;
             paciente_id: number;
             dentista_id: string;
-            fecha_hora_inicio: Date;
             fecha_hora_fin: Date;
             estado: import("../../generated/prisma/enums").estado_cita;
             motivo_consulta: string | null;
             fecha_creacion: Date | null;
         } | null;
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_consulta: Date | null;
         paciente_id: number;
         dentista_id: string;
         cita_id: number | null;
@@ -148,10 +149,10 @@ export declare class NotasClinicasController {
         tratamiento_realizado: string | null;
         notas_evolucion: string | null;
         odontograma_estado: import("@prisma/client/runtime/client").JsonValue | null;
-        fecha_consulta: Date | null;
     }>;
     remove(id: number): Promise<{
         id: number;
+        fecha_consulta: Date | null;
         paciente_id: number;
         dentista_id: string;
         cita_id: number | null;
@@ -159,6 +160,5 @@ export declare class NotasClinicasController {
         tratamiento_realizado: string | null;
         notas_evolucion: string | null;
         odontograma_estado: import("@prisma/client/runtime/client").JsonValue | null;
-        fecha_consulta: Date | null;
     }>;
 }

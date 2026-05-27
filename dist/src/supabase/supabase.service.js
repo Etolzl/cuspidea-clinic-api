@@ -24,6 +24,7 @@ let SupabaseService = SupabaseService_1 = class SupabaseService {
         this.supabase = (0, supabase_js_1.createClient)(supabaseUrl, supabaseKey, {
             auth: {
                 persistSession: false,
+                flowType: 'implicit',
             },
         });
         if (serviceRoleKey) {

@@ -15,6 +15,7 @@ export class SupabaseService {
     this.supabase = createClient(supabaseUrl, supabaseKey, {
       auth: {
         persistSession: false,
+        flowType: 'implicit',
       },
     });
 

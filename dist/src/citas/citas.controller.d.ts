@@ -5,56 +5,56 @@ export declare class CitasController {
     private readonly citasService;
     constructor(citasService: CitasService);
     create(dto: CreateCitaDto): Promise<{
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_hora_inicio: Date;
         paciente_id: number;
         dentista_id: string;
-        fecha_hora_inicio: Date;
         fecha_hora_fin: Date;
         estado: import("../../generated/prisma/enums").estado_cita;
         motivo_consulta: string | null;
         fecha_creacion: Date | null;
     }>;
     findAll(dentista_id?: string, paciente_id?: string, fecha_desde?: string, fecha_hasta?: string, estado?: string): Promise<({
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_hora_inicio: Date;
         paciente_id: number;
         dentista_id: string;
-        fecha_hora_inicio: Date;
         fecha_hora_fin: Date;
         estado: import("../../generated/prisma/enums").estado_cita;
         motivo_consulta: string | null;
@@ -63,15 +63,16 @@ export declare class CitasController {
     findOne(id: number): Promise<{
         cobros: {
             id: number;
+            fecha_emision: Date | null;
             paciente_id: number;
             cita_id: number | null;
             monto_total: import("@prisma/client/runtime/index-browser").Decimal;
             monto_pagado: import("@prisma/client/runtime/index-browser").Decimal;
             saldo_pendiente: import("@prisma/client/runtime/index-browser").Decimal | null;
-            fecha_emision: Date | null;
         }[];
         notas_clinicas: {
             id: number;
+            fecha_consulta: Date | null;
             paciente_id: number;
             dentista_id: string;
             cita_id: number | null;
@@ -79,58 +80,57 @@ export declare class CitasController {
             tratamiento_realizado: string | null;
             notas_evolucion: string | null;
             odontograma_estado: import("@prisma/client/runtime/client").JsonValue | null;
-            fecha_consulta: Date | null;
         }[];
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_hora_inicio: Date;
         paciente_id: number;
         dentista_id: string;
-        fecha_hora_inicio: Date;
         fecha_hora_fin: Date;
         estado: import("../../generated/prisma/enums").estado_cita;
         motivo_consulta: string | null;
         fecha_creacion: Date | null;
     }>;
     update(id: number, dto: UpdateCitaDto): Promise<{
+        perfiles: {
+            nombre_completo: string;
+            telefono: string | null;
+            id: string;
+            fecha_creacion: Date | null;
+            rol: import("../../generated/prisma/enums").user_role;
+        };
         pacientes: {
-            id: number;
-            perfil_id: string | null;
             nombre_completo: string;
             telefono: string;
             correo: string | null;
             fecha_nacimiento: Date | null;
             antecedentes_medicos: string | null;
+            perfil_id: string | null;
             fecha_registro: Date | null;
-        };
-        perfiles: {
-            id: string;
-            fecha_creacion: Date | null;
-            nombre_completo: string;
-            telefono: string | null;
-            rol: import("../../generated/prisma/enums").user_role;
+            id: number;
         };
     } & {
         id: number;
+        fecha_hora_inicio: Date;
         paciente_id: number;
         dentista_id: string;
-        fecha_hora_inicio: Date;
         fecha_hora_fin: Date;
         estado: import("../../generated/prisma/enums").estado_cita;
         motivo_consulta: string | null;
@@ -138,9 +138,9 @@ export declare class CitasController {
     }>;
     remove(id: number): Promise<{
         id: number;
+        fecha_hora_inicio: Date;
         paciente_id: number;
         dentista_id: string;
-        fecha_hora_inicio: Date;
         fecha_hora_fin: Date;
         estado: import("../../generated/prisma/enums").estado_cita;
         motivo_consulta: string | null;
