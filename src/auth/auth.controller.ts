@@ -5,6 +5,7 @@ import { RegisterDto } from './dto/register.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ExchangeCodeDto } from './dto/exchange-code.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { SendInvitationDto } from './dto/send-invitation.dto';
 import { SupabaseAuthGuard } from './guards/supabase-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -22,6 +23,12 @@ export class AuthController {
   @Post('register')
   register(@Body() dto: RegisterDto) {
     return this.authService.register(dto);
+  }
+
+  @Post('send-invitation')
+  @HttpCode(HttpStatus.OK)
+  sendInvitation(@Body() dto: SendInvitationDto) {
+    return this.authService.sendInvitation(dto);
   }
 
   @Post('forgot-password')

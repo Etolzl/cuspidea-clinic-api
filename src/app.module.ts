@@ -10,6 +10,7 @@ import { NotasClinicasModule } from './notas-clinicas/notas-clinicas.module';
 import { DocumentosClinicosModule } from './documentos-clinicos/documentos-clinicos.module';
 import { AuthModule } from './auth/auth.module';
 import { SupabaseModule } from './supabase/supabase.module';
+import { EmailModule } from './email/email.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { SupabaseModule } from './supabase/supabase.module';
     CobrosModule,
     NotasClinicasModule,
     DocumentosClinicosModule,
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

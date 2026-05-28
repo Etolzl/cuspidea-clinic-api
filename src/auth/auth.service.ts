@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, BadRequestException, UnauthorizedException, Logger } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
@@ -6,12 +6,21 @@ import { RegisterDto } from './dto/register.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ExchangeCodeDto } from './dto/exchange-code.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { SendInvitationDto } from './dto/send-invitation.dto';
+import { EmailService } from '../email/email.service';
+import { render } from '@react-email/render';
+import { ActivationEmail } from '../email/templates/ActivationEmail';
+import { ResetPasswordEmail } from '../email/templates/ResetPasswordEmail';
+import * as React from 'react';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly supabase: SupabaseService,
     private readonly prisma: PrismaService,
+    private readonly emailService: EmailService,
   ) {}
 
   async login(dto: LoginDto) {
@@ -24,7 +33,6 @@ export class AuthService {
       throw new UnauthorizedException(error.message);
     }
 
-    // Buscamos el perfil correspondiente
     const perfil = await this.prisma.db.perfiles.findUnique({
       where: { id: data.user.id },
     });
@@ -44,7 +52,6 @@ export class AuthService {
   }
 
   async register(dto: RegisterDto) {
-    // 1. Registramos en Supabase Auth mediante Admin API para auto-confirmar y evitar rate limits de correos
     const { data, error } = await this.supabase.adminClient.auth.admin.createUser({
       email: dto.email,
       password: dto.password,
@@ -62,8 +69,6 @@ export class AuthService {
       throw new BadRequestException('Error al crear el usuario en el proveedor de autenticación');
     }
 
-    // 2. Sincronizamos en la tabla public.perfiles
-    // Usamos upsert por si existe un trigger en Supabase que cree el perfil antes
     const perfil = await this.prisma.db.perfiles.upsert({
       where: { id: data.user.id },
       update: {
@@ -88,15 +93,75 @@ export class AuthService {
     };
   }
 
-  async forgotPassword(dto: ForgotPasswordDto) {
+  async sendInvitation(dto: SendInvitationDto) {
     const redirectTo = `${process.env.FRONTEND_URL || 'http://localhost:3001'}/reset-password`;
-
-    const { error } = await this.supabase.client.auth.resetPasswordForEmail(dto.email, {
-      redirectTo,
+    
+    // Generar un link de recovery para que el usuario pueda establecer su contraseña
+    const { data, error } = await this.supabase.adminClient.auth.admin.generateLink({
+      type: 'recovery',
+      email: dto.email,
+      options: {
+        redirectTo,
+      },
     });
 
     if (error) {
       throw new BadRequestException(error.message);
+    }
+
+    // El link devuelto por Supabase.
+    const actionLink = data.properties.action_link;
+
+    // Renderizar el email
+    const html = await render(React.createElement(ActivationEmail, { 
+      name: dto.name, 
+      actionLink 
+    }));
+
+    try {
+      await this.emailService.sendEmail(
+        dto.email,
+        'Activa tu cuenta en Cúspidea',
+        html,
+      );
+      return { message: 'Invitación enviada con éxito' };
+    } catch (e) {
+      this.logger.error(`Error enviando invitación a ${dto.email}`, e);
+      throw new BadRequestException('No se pudo enviar el correo de invitación');
+    }
+  }
+
+  async forgotPassword(dto: ForgotPasswordDto) {
+    const redirectTo = `${process.env.FRONTEND_URL || 'http://localhost:3001'}/reset-password`;
+
+    // Usar generateLink en lugar de resetPasswordForEmail para obtener el link y enviar email custom
+    const { data, error } = await this.supabase.adminClient.auth.admin.generateLink({
+      type: 'recovery',
+      email: dto.email,
+      options: {
+        redirectTo,
+      },
+    });
+
+    if (error) {
+      // Retornar éxito de todos modos para no revelar si el correo existe
+      return { message: 'Si el correo existe, se han enviado instrucciones' };
+    }
+
+    const actionLink = data.properties.action_link;
+
+    const html = await render(React.createElement(ResetPasswordEmail, { 
+      actionLink 
+    }));
+
+    try {
+      await this.emailService.sendEmail(
+        dto.email,
+        'Restablecer contraseña - Cúspidea',
+        html,
+      );
+    } catch (e) {
+      this.logger.error(`Error enviando recuperación de contraseña a ${dto.email}`, e);
     }
 
     return { message: 'Correo de recuperación enviado con éxito' };

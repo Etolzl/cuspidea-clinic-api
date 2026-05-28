@@ -21,6 +21,7 @@ const register_dto_1 = require("./dto/register.dto");
 const forgot_password_dto_1 = require("./dto/forgot-password.dto");
 const exchange_code_dto_1 = require("./dto/exchange-code.dto");
 const update_password_dto_1 = require("./dto/update-password.dto");
+const send_invitation_dto_1 = require("./dto/send-invitation.dto");
 const supabase_auth_guard_1 = require("./guards/supabase-auth.guard");
 const swagger_1 = require("@nestjs/swagger");
 let AuthController = class AuthController {
@@ -33,6 +34,9 @@ let AuthController = class AuthController {
     }
     register(dto) {
         return this.authService.register(dto);
+    }
+    sendInvitation(dto) {
+        return this.authService.sendInvitation(dto);
     }
     forgotPassword(dto) {
         return this.authService.forgotPassword(dto);
@@ -62,6 +66,15 @@ __decorate([
     __metadata("design:paramtypes", [register_dto_1.RegisterDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('send-invitation'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.OK),
+    openapi.ApiResponse({ status: common_1.HttpStatus.OK }),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [send_invitation_dto_1.SendInvitationDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "sendInvitation", null);
 __decorate([
     (0, common_1.Post)('forgot-password'),
     (0, common_1.HttpCode)(common_1.HttpStatus.OK),

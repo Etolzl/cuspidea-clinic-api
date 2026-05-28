@@ -19,6 +19,7 @@ const notas_clinicas_module_1 = require("./notas-clinicas/notas-clinicas.module"
 const documentos_clinicos_module_1 = require("./documentos-clinicos/documentos-clinicos.module");
 const auth_module_1 = require("./auth/auth.module");
 const supabase_module_1 = require("./supabase/supabase.module");
+const email_module_1 = require("./email/email.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -34,6 +35,7 @@ exports.AppModule = AppModule = __decorate([
             cobros_module_1.CobrosModule,
             notas_clinicas_module_1.NotasClinicasModule,
             documentos_clinicos_module_1.DocumentosClinicosModule,
+            email_module_1.EmailModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
